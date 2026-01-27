@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Food</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body{
+      background:#0f172a;
+      color:#e5e7eb;
+      font-family: Arial, sans-serif;
+      padding:20px;
+    }
+    h1{
+      text-align:center;
+      color:#22c55e;
+    }
+    label{
+      margin-top:15px;
+      display:block;
+    }
+    input, select, button{
+      width:100%;
+      padding:10px;
+      margin-top:5px;
+      border-radius:6px;
+      border:none;
+      font-size:16px;
+    }
+    button{
+      background:#22c55e;
+      color:#000;
+      margin-top:20px;
+      font-weight:bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Place Your Order</h1>
+
+<form onsubmit="sendOrder(); return false;">
+
+  <label>Your Place</label>
+  <input type="text" id="place" placeholder="Enter your location" required>
+
+  <label>Choose Food</label>
+  <select id="food">
+    <option>Awara</option>
+    <option>Dan Wake</option>
+    <option>Gurasa</option>
+  </select>
+
+  <label>Delivery Time</label>
+  <input type="time" id="time" required>
+
+  <label>Delivery Type</label>
+  <select id="delivery">
+    <option>Delivery</option>
+    <option>I will come and pick it</option>
+  </select>
+
+  <button type="submit">Send Order on WhatsApp</button>
+
+</form>
+
+<script>
+function sendOrder(){
+  var place = document.getElementById("place").value;
+  var food = document.getElementById("food").value;
+  var time = document.getElementById("time").value;
+  var delivery = document.getElementById("delivery").value;
+
+  var message =
+    "NEW FOOD ORDER%0A%0A" +
+    "Place: " + place + "%0A" +
+    "Food: " + food + "%0A" +
+    "Time: " + time + "%0A" +
+    "Delivery: " + delivery;
+
+  window.open(
+    "https://wa.me/2348034674869?text=" + message,
+    "_blank"
+  );
+}
+</script>
+
+</body>
+</html>
