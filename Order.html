@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order | Tea Testy Spots</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{background:#0f0f0f;color:#fff;font-family:Arial;padding:20px}
+h2{text-align:center;color:#c9a24d}
+input,select,textarea,button{
+width:100%;padding:12px;margin-top:10px;
+border:none;border-radius:6px;font-size:16px}
+button{background:#c9a24d;color:#000;font-weight:bold}
+.section{margin-bottom:20px}
+</style>
+</head>
+<body>
 
+<h2>Place Your Order</h2>
+
+<div class="section">
+<input id="name" placeholder="Your Name">
+<input id="phone" placeholder="Phone Number">
+</div>
+
+<div class="section">
+<select id="food">
+<option value="Awara - ₦500">Awara - ₦500</option>
+<option value="Dan Wake - ₦700">Dan Wake - ₦700</option>
+<option value="Gurasa - ₦300">Gurasa - ₦300</option>
+</select>
+
+<input id="qty" type="number" placeholder="Quantity">
+
+<select id="delivery">
+<option>Home Delivery</option>
+<option>Pickup</option>
+</select>
+
+<input type="time" id="time">
+<textarea id="address" placeholder="Delivery Address"></textarea>
+</div>
+
+<button onclick="sendOrder()">Submit Order (WhatsApp)</button>
+<br><br>
+<button onclick="payNow()">Pay Now</button>
+
+<script>
+function sendOrder(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let food=document.getElementById("food").value;
+let qty=document.getElementById("qty").value;
+let delivery=document.getElementById("delivery").value;
+let time=document.getElementById("time").value;
+let address=document.getElementById("address").value;
+
+let msg=
+"New Order from Tea Testy Spots%0A%0A"+
+"Name: "+name+"%0A"+
+"Phone: "+phone+"%0A"+
+"Food: "+food+"%0A"+
+"Quantity: "+qty+"%0A"+
+"Delivery Type: "+delivery+"%0A"+
+"Delivery Time: "+time+"%0A"+
+"Address: "+address+"%0A%0A"+
+"Email: muhammadsodangizainab@gmail.com";
+
+window.open("https://wa.me/2348034674869?text="+msg);
+}
+
+function payNow(){
+window.open("https://paystack.shop/pay/tea-testy-spots-order");
+}
+</script>
+
+</body>
+</html>
