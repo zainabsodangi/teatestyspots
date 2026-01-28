@@ -3,175 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <title>Order | Tea Testy Spots</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PAYSTACK -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
 <style>
 body{
   background:#0f0f0f;
   color:#fff;
-  font-family:Arial,sans-serif;
+  font-family:Arial, sans-serif;
   padding:20px;
-  margin:0;
 }
-header{
+.container{
+  max-width:500px;
+  margin:auto;
+}
+h2{
   text-align:center;
-  padding:20px;
-}
-header img.logo{
-  width:80px;
-  height:auto;
-  margin-bottom:10px;
-}
-header h1{
   color:#c9a24d;
-  margin:5px 0;
 }
-input, select, textarea, button{
+.form-group{
+  margin-bottom:15px;
+}
+input, textarea{
   width:100%;
-  padding:12px;
-  margin-top:10px;
+  height:50px;
+  padding:10px;
+  border-radius:8px;
   border:none;
-  border-radius:6px;
   font-size:16px;
 }
+textarea{
+  height:80px;
+  resize:none;
+}
+label{
+  display:block;
+  margin-bottom:8px;
+}
 button{
+  width:100%;
+  height:55px;
   background:#c9a24d;
   color:#000;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
   font-weight:bold;
   cursor:pointer;
+  margin-top:10px;
 }
-.section{
-  margin-bottom:20px;
+#submitBtn{
+  opacity:0.5;
 }
-#success{
+#receipt{
   display:none;
-  background:#1b1b1b;
-  border:1px solid #c9a24d;
+  background:#1a1a1a;
   padding:15px;
-  border-radius:8px;
-  margin-top:20px;
-  color:#c9a24d;
-  text-align:center;
-}
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin-top:20px;
-}
-.gallery img{
-  width:100%;
-  height:120px;
-  object-fit:cover;
   border-radius:10px;
-  transition:0.3s;
-}
-.gallery img:hover{
-  transform:scale(1.05);
+  margin-top:20px;
 }
 </style>
 </head>
+
 <body>
-
-<header>
-  <img src="https://images.unsplash.com/photo-1616192021875-282a1a1791b0?fit=crop&w=80&h=80" alt="Logo" class="logo">
-  <h1>Tea Testy Spots</h1>
-</header>
-
 <div class="container">
-  <h2 style="text-align:center;color:#c9a24d;">Place Your Order</h2>
 
-  <!-- Customer Info -->
-  <div class="section">
-    <input id="name" placeholder="Your Name" required>
-    <input id="phone" placeholder="Phone Number" required>
-    <input id="email" placeholder="Your Email" required>
-  </div>
+<h2>Place Your Order</h2>
 
-  <!-- Order Details -->
-  <div class="section">
-    <select id="food">
-      <option value="Awara - ₦500">Awara - ₦500</option>
-      <option value="Dan Wake - ₦700">Dan Wake - ₦700</option>
-      <option value="Gurasa - ₦300">Gurasa - ₦300</option>
-    </select>
+<div class="form-group">
+  <input type="text" id="phone" placeholder="Phone Number" required>
+</div>
 
-    <input id="qty" type="number" placeholder="Quantity" required>
+<div class="form-group">
+  <label>Select Food</label>
+  <label><input type="checkbox" value="Awara - ₦500" data-price="500" onchange="updateTotal()"> Awara (₦500)</label>
+  <label><input type="checkbox" value="Dan Wake - ₦700" data-price="700" onchange="updateTotal()"> Dan Wake (₦700)</label>
+  <label><input type="checkbox" value="Gurasa - ₦300" data-price="300" onchange="updateTotal()"> Gurasa (₦300)</label>
+</div>
 
-    <select id="delivery">
-      <option>Home Delivery</option>
-      <option>Pickup</option>
-    </select>
+<div class="form-group">
+  <input type="text" id="price" placeholder="Total Price (₦)" readonly>
+</div>
 
-    <input type="time" id="time" required>
-    <textarea id="address" placeholder="Delivery Address"></textarea>
-  </div>
+<div class="form-group">
+  <input type="time" id="time" required>
+</div>
 
-  <!-- Small gallery -->
-  <div class="gallery">
-    <img src="https://images.unsplash.com/photo-1616192032081-9f967a41e5c4?fit=crop&w=300&h=200" alt="Awara">
-    <img src="https://images.unsplash.com/photo-1616192041182-2c4f729d8b4e?fit=crop&w=300&h=200" alt="Dan Wake">
-    <img src="https://images.unsplash.com/photo-1616192051582-8e9c71cbbd2f?fit=crop&w=300&h=200" alt="Gurasa">
-    <img src="https://images.unsplash.com/photo-1616192062058-d6e0b771b8f6?fit=crop&w=300&h=200" alt="Snacks">
-  </div>
+<div class="form-group">
+  <textarea id="address" placeholder="Delivery Address" required></textarea>
+</div>
 
-  <!-- Buttons -->
-  <button onclick="sendOrder()">Submit Order</button>
-  <br><br>
-  <button onclick="payNow()">Pay Now</button>
+<button onclick="payNow()">Pay Now</button>
+<button id="submitBtn" onclick="sendOrder()" disabled>Submit Order</button>
 
-  <!-- SUCCESS MESSAGE + Appreciation -->
-  <div id="success">
-    <h3>Thank you for your order ❤️</h3>
-    <p id="appreciationText"></p>
-    <p>We will contact you shortly via WhatsApp or phone.</p>
-    <p><b>Estimated delivery time:</b> <span id="showTime"></span></p>
-  </div>
+<div id="receipt"></div>
+
 </div>
 
 <script>
-function sendOrder(){
-  let name = document.getElementById("name").value;
-  let phone = document.getElementById("phone").value;
-  let email = document.getElementById("email").value;
-  let food = document.getElementById("food").value;
-  let qty = document.getElementById("qty").value;
-  let delivery = document.getElementById("delivery").value;
-  let time = document.getElementById("time").value;
-  let address = document.getElementById("address").value;
+let totalPrice = 0;
+let selectedFoods = [];
+let paymentDone = false;
 
-  // Show success message
-  document.getElementById("success").style.display = "block";
-  document.getElementById("showTime").innerText = time;
-
-  // Appreciation text
-  document.getElementById("appreciationText").innerText =
-    "Dear " + name + ", we truly appreciate your order! 🍴 Thank you for choosing Tea Testy Spots.";
-
-  // WhatsApp message
-  let msg =
-  "New Order from Tea Testy Spots%0A%0A"+
-  "Name: "+name+"%0A"+
-  "Phone: "+phone+"%0A"+
-  "Email: "+email+"%0A"+
-  "Food: "+food+"%0A"+
-  "Quantity: "+qty+"%0A"+
-  "Delivery Type: "+delivery+"%0A"+
-  "Delivery Time: "+time+"%0A"+
-  "Address: "+address;
-
-  // Open WhatsApp
-  window.open("https://wa.me/2348034674869?text="+msg);
-
-  // Open Email
-  window.location.href =
-    "mailto:muhammadsodangizainab@gmail.com"+
-    "?subject=New Order - Tea Testy Spots"+
-    "&body="+msg.replace(/%0A/g,"\n");
+function updateTotal(){
+  totalPrice = 0;
+  selectedFoods = [];
+  document.querySelectorAll('input[type="checkbox"]:checked').forEach(item=>{
+    totalPrice += parseInt(item.dataset.price);
+    selectedFoods.push(item.value);
+  });
+  document.getElementById("price").value = totalPrice > 0 ? "₦"+totalPrice : "";
 }
 
-// Paystack button
 function payNow(){
-  window.open("https://paystack.shop/pay/tea-testy-spots-order");
+  let phone = document.getElementById("phone").value;
+  if(phone=="" || totalPrice==0){
+    alert("Please enter phone number and select food");
+    return;
+  }
+
+  let handler = PaystackPop.setup({
+    key: '',  // ❌ AN CIRE KEY – saka LIVE key idan kin shirya real money
+    email: 'muhammadsodangizainab@gmail.com',
+    amount: totalPrice * 100,
+    currency: 'NGN',
+    callback: function(response){
+      paymentDone = true;
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("submitBtn").style.opacity = "1";
+      alert("Payment successful ✅");
+    },
+    onClose: function(){
+      alert("Payment not completed");
+    }
+  });
+  handler.openIframe();
+}
+
+function sendOrder(){
+  if(!paymentDone){
+    alert("Please make payment first");
+    return;
+  }
+
+  let phone = document.getElementById("phone").value;
+  let time = document.getElementById("time").value;
+  let address = document.getElementById("address").value;
+  let foodList = selectedFoods.join(", ");
+
+  let message =
+  "PAID ORDER - TEA TESTY SPOTS\n\n"+
+  "Foods: "+foodList+"\n"+
+  "Total Paid: ₦"+totalPrice+"\n"+
+  "Phone: "+phone+"\n"+
+  "Delivery Time: "+time+"\n"+
+  "Address: "+address;
+
+  // Email notification
+  window.location.href =
+  "mailto:muhammadsodangizainab@gmail.com"+
+  "?subject=PAID Order - Tea Testy Spots"+
+  "&body="+encodeURIComponent(message);
+
+  // Receipt / Appreciation text
+  document.getElementById("receipt").style.display = "block";
+  document.getElementById("receipt").innerHTML =
+  "<h3 style='color:#c9a24d;'>Thank you for your order ❤️</h3>"+
+  "<p><b>Foods:</b> "+foodList+"</p>"+
+  "<p><b>Total Paid:</b> ₦"+totalPrice+"</p>"+
+  "<p><b>Delivery Time:</b> "+time+"</p>"+
+  "<p>We are preparing your food 🍽️</p>";
 }
 </script>
 
