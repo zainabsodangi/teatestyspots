@@ -1,77 +1,57 @@
-lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Tea Tasty Spot</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body{
-      margin:0;
-      font-family:Arial, sans-serif;
-      background:#0b0f19;
-      color:#eaeaea;
-    }
-    header{
-      background:#020617;
-      padding:15px;
-      text-align:center;
-    }
-    nav a{
-      color:#38bdf8;
-      margin:10px;
-      text-decoration:none;
-      font-weight:bold;
-    }
-    .hero{
-      padding:50px 20px;
-      text-align:center;
-    }
-    .hero h1{
-      font-size:32px;
-    }
-    .hero p{
-      font-size:16px;
-      opacity:0.9;
-    }
-    .btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:12px 25px;
-      background:#38bdf8;
-      color:#020617;
-      border-radius:30px;
-      text-decoration:none;
-      font-weight:bold;
-    }
-    footer{
-      background:#020617;
-      text-align:center;
-      padding:15px;
-      font-size:14px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Tea Testy Spots</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#0f0f0f;color:#fff;}
+header{text-align:center;padding:20px;}
+header img.logo{width:80px;margin-bottom:10px;}
+header h1{color:#c9a24d;margin:5px 0;}
+.hero-img{width:100%;max-height:300px;object-fit:cover;border-radius:0 0 20px 20px;}
+.container{padding:20px;text-align:center;}
+.btn{display:inline-block;margin:10px;padding:12px 25px;background:#c9a24d;color:#000;text-decoration:none;border-radius:25px;font-weight:bold;}
+.section{margin-top:30px;}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:20px;}
+.gallery img{width:100%;height:140px;object-fit:cover;border-radius:10px;transition:0.3s;}
+.gallery img:hover{transform:scale(1.05);}
+footer{text-align:center;padding:15px;color:#aaa;font-size:14px;}
+</style>
 </head>
-
 <body>
 
 <header>
-  <h2>Tea Tasty Spot</h2>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="order.html">Order</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <img src="images/logo.png" alt="Logo" class="logo">
+  <h1>Tea Testy Spots</h1>
+  <p>Delicious Awara, Dan Wake & Gurasa</p>
 </header>
 
-<section class="hero">
-  <h1>Delicious Local Food</h1>
-  <p>We sell tasty food like Awara, Dan Wake and Gurasa.</p>
-  <a class="btn" href="order.html">Order Now</a>
-</section>
+<nav style="text-align:center; margin-bottom:20px;">
+  <a href="index.html" style="color:#c9a24d; text-decoration:none; margin:0 15px;">Home</a>
+  <a href="about.html" style="color:#c9a24d; text-decoration:none; margin:0 15px;">About</a>
+  <a href="order.html" style="color:#c9a24d; text-decoration:none; margin:0 15px;">Order</a>
+</nav>
+
+<img src="images/hero.jpg" alt="Hero Food" class="hero-img">
+
+<div class="container">
+  <a href="order.html" class="btn">Order Now</a>
+  <a href="about.html" class="btn">About Us</a>
+
+  <div class="section">
+    <h2 style="color:#c9a24d;">Our Food Gallery</h2>
+    <div class="gallery">
+      <img src="images/food1.jpg" alt="Awara">
+      <img src="images/food2.jpg" alt="Dan Wake">
+      <img src="images/food3.jpg" alt="Gurasa">
+      <img src="images/food4.jpg" alt="Snacks">
+    </div>
+  </div>
+</div>
 
 <footer>
-  © 2026 Tea Tasty Spot
+  © 2026 Tea Testy Spots
 </footer>
 
 </body>
